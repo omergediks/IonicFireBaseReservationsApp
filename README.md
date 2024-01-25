@@ -7,9 +7,9 @@ Bu proje, "Kütüphane Yönetim Sistemi" için oluşturduğum mobil apptir.  Kul
 Öncelikle FireBase Console'a gidip oluşturduğunuz proje bilgilerini kullanarak bu alanları doldurmanız gerekiyor.
 
 ```typescript
-// src/environments/environment.ts
+// src/app/app.module.ts
 
-export const environment = {
+const veritabanı = {
   production: false,
   firebaseConfig: {
     apiKey: "your-api-key",
