@@ -1,0 +1,86 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Kütüphane Yönetim Sistemi
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cikis()">
+        Çıkış
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item *ngIf="showMenu && masaEkleFormVisible">
+    <ion-label position="floating">Masa Adı</ion-label>
+    <ion-input [(ngModel)]="masaAdi"></ion-input>
+    <ion-button (click)="masaEkle()" expand="full">Masa Ekle</ion-button>
+  </ion-item>
+
+  <ion-list *ngIf="showMenu && yuvarlakButonlarVisible && bosMasalar.length > 0">
+    <ion-item *ngFor="let masa of bosMasalar">
+      <ion-button
+        [color]="masa.bosmu ? 'success' : 'danger'"
+        (click)="randevuAl(masa.id)"
+        shape="round"
+      >
+        {{ masa.isim }}
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="showMenu && mevcutRandevularVisible && randevular.length > 0">
+    <ion-item *ngFor="let randevu of randevular">
+      {{ randevu.ad }} {{ randevu.soyad }} - Masa: {{ randevu.masaId }}
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="showMenu && (masaSecimiVisible || (randevuBilgileriVisible && bosMasalar.length > 0))">
+    <ion-item *ngIf="masaSecimiVisible && bosMasalar.length > 0">
+      <ion-label position="floating">Masa Seçimi</ion-label>
+      <ion-select [(ngModel)]="secilenMasa">
+        <ion-select-option *ngFor="let masa of bosMasalar" [value]="masa.id">
+          {{ masa.isim }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item *ngIf="bosMasalar.length === 0">
+      Tüm masalar dolu.
+    </ion-item>
+  
+    <ion-item *ngIf="randevuBilgileriVisible">
+      <ion-label position="floating">Adınız</ion-label>
+      <ion-input [(ngModel)]="ad"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="randevuBilgileriVisible">
+      <ion-label position="floating">Soyadınız</ion-label>
+      <ion-input [(ngModel)]="soyad"></ion-input>
+    </ion-item>
+  
+    <ion-button *ngIf="randevuBilgileriVisible && bosMasalar.length > 0" (click)="randevuAl(secilenMasa)" expand="full">Randevu Al</ion-button>
+  </ion-list>
+  
+</ion-content>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="toggleMenu()">
+    <ion-icon [name]="showMenu ? 'close' : 'add'"></ion-icon>
+  </ion-fab-button>
+
+  <ion-fab-list side="start">
+    <ion-fab-button *ngIf="showMenu" (click)="toggleMasaEkleForm()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="showMenu" (click)="toggleYuvarlakButonlar()">
+      <ion-icon name="albums"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="showMenu" (click)="toggleMevcutRandevular()">
+      <ion-icon name="calendar"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="showMenu" (click)="toggleMasaSecimi()">
+      <ion-icon name="checkbox"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>

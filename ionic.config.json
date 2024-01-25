@@ -1,0 +1,7 @@
+{
+  "name": "ornekproje",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
